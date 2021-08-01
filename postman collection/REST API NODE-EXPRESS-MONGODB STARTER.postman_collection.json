@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "9bf856c7-de3f-4fae-b546-ddd84c15b3f0",
+		"name": "REST API NODE-EXPRESS-MONGODB STARTER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create-Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Fourty Rules of Love",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "550",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "Book Written by Shams Tabraz",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products/6105ab1984dee51e90a8d4fe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"6105ab1984dee51e90a8d4fe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "Fourty Rules of Love[Edited]",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "990",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": " Book Written by Daron on factors which are cause behind nations fail[Edited]",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/products/6106a8aa63112b1d4cc79ffe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"6106a8aa63112b1d4cc79ffe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/products/6105ab1984dee51e90a8d4fe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"products",
+						"6105ab1984dee51e90a8d4fe"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
