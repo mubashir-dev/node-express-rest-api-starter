@@ -1,30 +1,29 @@
 const { body, validationResult } = require("express-validator");
 const Product = require('../models/product.model');
 const mongoose = require('mongoose');
+const httpError = require('http-errors');
 
 
-
-exports.findAll = async (req, res) => {
+exports.findAll = async (req, res, next) => {
     try {
         const result = await Product.find({}, { __v: 0 });
         res.send({ data: result });
     }
     catch (error) {
-        console.log(error.message);
-        res.status(500);
-        res.send(error.message);
+        next(new httpError(500, { message: error.message }));
     }
 };
 
-exports.find = async (req, res) => {
+exports.find = async (req, res, next) => {
     try {
         const result = await Product.findOne({ _id: req.params.id });
+        if (!result) {
+            next(new httpError(200, { message: 'Record Not Found' }))
+        }
         res.send({ data: result });
     }
     catch (error) {
-        console.log(error.message);
-        res.status(500);
-        res.send(error.message);
+        next(new httpError(500, { message: error.message }));
     }
 };
 
@@ -48,18 +47,15 @@ exports.create = [
                 errors.array().forEach((element) => {
                     _errors.push(element.msg);
                 });
-                res.send({ errors: _errors });
+                next(new httpError(200, { message: _errors }));
             }
             else {
                 const result = await product.save();
                 res.send(result);
             }
-
         }
         catch (error) {
-            console.log(error.message);
-            res.status(500);
-            res.send(error.message);
+            next(new httpError(500, { message: error.message }));
         }
     },
 ]
@@ -75,15 +71,12 @@ exports.update = [
             }
         });
     }),
-    async function (req, res) {
+    async function (req, res, next) {
 
         try {
             const foundProduct = await Product.findOne({ _id: req.params.id })
             if (!foundProduct) {
-                res.status(404);
-                res.send({
-                    message: 'Product not found with this ID'
-                });
+                next(new httpError(404, 'Product not found with this ID'));
             }
             else {
                 const errors = validationResult(req);
@@ -92,7 +85,8 @@ exports.update = [
                     errors.array().forEach((element) => {
                         _errors.push(element.msg);
                     });
-                    res.send({ errors: _errors });
+                    next(new httpError(200, { message: _errors }));
+
                 }
                 else {
                     const result = await Product.findByIdAndUpdate(req.params.id, req.body);
@@ -102,13 +96,11 @@ exports.update = [
             }
         }
         catch (error) {
-            console.log(error.message);
-            res.status(500);
-            res.send(error.message);
+            next(new httpError(500, { message: error.message }));
         }
     },
 ]
-exports.delete = async (req, res) => {
+exports.delete = async (req, res, next) => {
 
     try {
         const result = await Product.findByIdAndDelete(req.params.id);
@@ -118,8 +110,6 @@ exports.delete = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error.message);
-        res.status(500);
-        res.send(error.message);
+        next(new httpError(500, { message: error.message }))
     }
 };
